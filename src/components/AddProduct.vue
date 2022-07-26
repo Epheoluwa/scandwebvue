@@ -22,9 +22,9 @@
                   <div class="col-sm-10">
                     <input type="name" class="form-control" :class="errrorClass" id="sku" placeholder="Product SKU" v-model="data.sku" required>
                   </div>
-                  <div v-show="error" class="invalid-feedback" style="display:block">
+                  <span v-show="error" class="invalid-feedback" style="display:block">
                     SKU must be unique 
-                  </div>
+                  </span>
             </div>
             
           </div>
