@@ -1,6 +1,6 @@
 <template>
 
-<form @submit.prevent="submitform">
+<form @submit.prevent="submitform" id="product_form">
   <div class="hello">
     <MainNav page="Add"> 
       <button class="btn btn-outline-success" type="submit">Save</button>
@@ -10,17 +10,17 @@
       <div class="row g-3">
           <div class="col-md-6">
             <div class="row mb-3">
-                  <label for="colFormLabel" class="col-sm-2 col-form-label">Name</label>
+                  <label for="name" class="col-sm-2 col-form-label">Name</label>
                   <div class="col-sm-10">
-                    <input type="name" class="form-control" id="colFormLabel" placeholder="Product Name" v-model="data.name" required>
+                    <input type="name" class="form-control" id="name" placeholder="Product Name" v-model="data.name" required>
                   </div>
             </div>
           </div>
           <div class="col-md-6">
             <div class="row mb-3">
-                  <label for="colFormLabel" class="col-sm-2 col-form-label">SKU</label>
+                  <label for="sku" class="col-sm-2 col-form-label">SKU</label>
                   <div class="col-sm-10">
-                    <input type="name" class="form-control" :class="errrorClass" id="colFormLabel" placeholder="Product SKU" v-model="data.sku" required>
+                    <input type="name" class="form-control" :class="errrorClass" id="sku" placeholder="Product SKU" v-model="data.sku" required>
                   </div>
                   <div v-show="error" class="invalid-feedback" style="display:block">
                     SKU must be unique 
@@ -30,64 +30,73 @@
           </div>
           <div class="col-md-6">
             <div class="row mb-3">
-                  <label for="colFormLabel" class="col-sm-2 col-form-label">Price</label>
+                  <label for="price" class="col-sm-2 col-form-label">Price</label>
                   <div class="col-sm-10">
-                    <input type="number" class="form-control" id="colFormLabel" placeholder="Product Price" v-model="data.price" required>
+                    <input type="number" class="form-control" id="price" placeholder="Product Price" v-model="data.price" required>
                   </div>
             </div>
           </div>
           <div class="col-md-6">
             <div class="row mb-3">
-                  <label for="colFormLabel" class="col-sm-3 col-form-label">Product type</label>
+                  <label for="productType" class="col-sm-3 col-form-label">Product type</label>
                   <div class="col-sm-9">
-                    <select id="" class="form-select" v-model="data.prod_type" @click="defineShowtype">
-                      <option value="size">DVD</option>
-                      <option value="book">Book</option>
-                      <option value="furniture">Furniture</option>
+                    <select id="productType" class="form-select" v-model="data.prod_type" @click="defineShowtype">
+                      <option value="size" id="DVD">DVD</option>
+                      <option value="book" id="Book">Book</option>
+                      <option value="furniture" id="Furniture">Furniture</option>
                     </select>
                   </div>
             </div>
           </div>
           <div class="col-md-6" v-show="sizetype">
             <div class="row mb-3">
-                  <label for="colFormLabel" class="col-sm-2 col-form-label">Size</label>
+                  <label for="size" class="col-sm-2 col-form-label">Size (MB)</label>
                   <div class="col-sm-10">
-                    <input type="number" class="form-control" id="colFormLabel" placeholder="Product Size" v-model="data.size" >
+                    <input type="number" class="form-control" id="size" placeholder="Product Size" v-model="data.size" >
                   </div>
             </div>
+            <p>Please provide size in megabyte</p>
           </div>
           <div class="col-md-6" v-show="booktype">
             <div class="row mb-3">
-                  <label for="colFormLabel" class="col-sm-2 col-form-label">Weight</label>
+                  <label for="weight" class="col-sm-2 col-form-label">Weight</label>
                   <div class="col-sm-10">
-                    <input type="number" class="form-control" id="colFormLabel" placeholder="Product Weight" v-model="data.weight">
+                    <input type="number" class="form-control" id="weight" placeholder="Product Weight" v-model="data.weight">
                   </div>
             </div>
+            <p>Please provide weight in kilogram</p>
           </div>
-          <div class="col-md-4" v-show="furnituretype">
-            <div class="row mb-3">
-                  <label for="colFormLabel" class="col-sm-2 col-form-label">Height</label>
-                  <div class="col-sm-10">
-                    <input type="number" class="form-control" id="colFormLabel" placeholder="Product Height" v-model="data.height" >
+          <div class="col-md-12" v-show="furnituretype">
+            
+            <div class="row">
+               <div class="col-md-4" >
+                  <div class="row mb-3">
+                        <label for="height" class="col-sm-2 col-form-label">Height</label>
+                        <div class="col-sm-10">
+                          <input type="number" class="form-control" id="height" placeholder="Product Height" v-model="data.height" >
+                        </div>
                   </div>
-            </div>
-          </div>
-          <div class="col-md-4" v-show="furnituretype">
-            <div class="row mb-3">
-                  <label for="colFormLabel" class="col-sm-2 col-form-label">Width</label>
-                  <div class="col-sm-10">
-                    <input type="number" class="form-control" id="colFormLabel" placeholder="Product Width" v-model="data.width">
+                </div>
+                <div class="col-md-4" >
+                  <div class="row mb-3">
+                        <label for="width" class="col-sm-2 col-form-label">Width</label>
+                        <div class="col-sm-10">
+                          <input type="number" class="form-control" id="width" placeholder="Product Width" v-model="data.width">
+                        </div>
                   </div>
-            </div>
-          </div>
-          <div class="col-md-4" v-show="furnituretype">
-            <div class="row mb-3">
-                  <label for="colFormLabel" class="col-sm-2 col-form-label">Length</label>
-                  <div class="col-sm-10">
-                    <input type="number" class="form-control" id="colFormLabel" placeholder="Product Length" v-model="data.length">
+                </div>
+                <div class="col-md-4">
+                  <div class="row mb-3">
+                        <label for="length" class="col-sm-2 col-form-label">Length</label>
+                        <div class="col-sm-10">
+                          <input type="number" class="form-control" id="length" placeholder="Product Length" v-model="data.length">
+                        </div>
                   </div>
+                </div>
             </div>
+               <p>Please provide dimension in HxWxL format</p>
           </div>
+        
       </div>
     </div>
    
@@ -135,8 +144,6 @@ export default {
         booktype.value = false
         furnituretype.value = true
       }
-     
-      
     }
     const errrorClass = ref('')
     const error = ref(false)
