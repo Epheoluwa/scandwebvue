@@ -12,7 +12,7 @@
             <div class="row mb-3">
                   <label for="colFormLabel" class="col-sm-2 col-form-label">Name</label>
                   <div class="col-sm-10">
-                    <input type="name" class="form-control" id="colFormLabel" placeholder="Product Name" v-model="data.name">
+                    <input type="name" class="form-control" id="colFormLabel" placeholder="Product Name" v-model="data.name" required>
                   </div>
             </div>
           </div>
@@ -20,15 +20,19 @@
             <div class="row mb-3">
                   <label for="colFormLabel" class="col-sm-2 col-form-label">SKU</label>
                   <div class="col-sm-10">
-                    <input type="name" class="form-control" id="colFormLabel" placeholder="Product SKU" v-model="data.sku">
+                    <input type="name" class="form-control" :class="errrorClass" id="colFormLabel" placeholder="Product SKU" v-model="data.sku" required>
+                  </div>
+                  <div v-show="error" class="invalid-feedback" style="display:block">
+                    SKU must be unique 
                   </div>
             </div>
+            
           </div>
           <div class="col-md-6">
             <div class="row mb-3">
                   <label for="colFormLabel" class="col-sm-2 col-form-label">Price</label>
                   <div class="col-sm-10">
-                    <input type="number" class="form-control" id="colFormLabel" placeholder="Product Price" v-model="data.price">
+                    <input type="number" class="form-control" id="colFormLabel" placeholder="Product Price" v-model="data.price" required>
                   </div>
             </div>
           </div>
@@ -48,7 +52,7 @@
             <div class="row mb-3">
                   <label for="colFormLabel" class="col-sm-2 col-form-label">Size</label>
                   <div class="col-sm-10">
-                    <input type="number" class="form-control" id="colFormLabel" placeholder="Product Size" v-model="data.size">
+                    <input type="number" class="form-control" id="colFormLabel" placeholder="Product Size" v-model="data.size" >
                   </div>
             </div>
           </div>
@@ -64,7 +68,7 @@
             <div class="row mb-3">
                   <label for="colFormLabel" class="col-sm-2 col-form-label">Height</label>
                   <div class="col-sm-10">
-                    <input type="number" class="form-control" id="colFormLabel" placeholder="Product Height" v-model="data.height">
+                    <input type="number" class="form-control" id="colFormLabel" placeholder="Product Height" v-model="data.height" >
                   </div>
             </div>
           </div>
@@ -94,6 +98,8 @@
 <script>
 import MainNav from './mainNav.vue' 
 import { reactive, ref } from 'vue'
+import axios from 'axios';
+import { useRouter } from "vue-router";
 export default {
   name: 'HelloWorld',
   components: { MainNav, },
@@ -109,6 +115,7 @@ export default {
       'width': '',
       'length': ''
     })
+    const router = useRouter();
     const sizetype = ref(false);
     const booktype = ref(false);
     const furnituretype = ref(false);
@@ -131,9 +138,26 @@ export default {
      
       
     }
-    
+    const errrorClass = ref('')
+    const error = ref(false)
     const submitform = function () {
-      
+      // console.log(data)
+      axios.post('http://localhost/phpcrudapi/api/create.php', 
+        {...data}, { headers: {
+          'Content-type': 'application/json',
+        }})
+        .then(function(response) {
+          // console.log(response.data.status)
+          if (response.data.status == true ) {
+            router.push({name: 'ViewProduct'})
+          }else{
+            errrorClass.value = 'is-invalid'
+            error.value = true
+          }
+          })
+        .catch(function(e){
+          console.log("Error:",e)
+        })
     }
     return{
       data,
@@ -141,7 +165,9 @@ export default {
       sizetype,
       booktype,
       furnituretype,
-      defineShowtype
+      defineShowtype,
+      error,
+      errrorClass
     }
   }
 }
