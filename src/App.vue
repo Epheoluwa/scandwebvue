@@ -1,20 +1,17 @@
 <template>
   
-  <MainNav page="Add"/>
-  <AddProduct msg="Dont remove yet using it to test"/>
+  <!-- <MainNav page="Add"/> -->
+  <router-view />
 </template>
 
 <script>
-import AddProduct from './components/AddProduct.vue'
 
-import MainNav from './components/mainNav.vue'
 
 
 export default {
   name: 'App',
   components: {
-    AddProduct,
-    MainNav,
+
 }
 }
 </script>
@@ -26,6 +23,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 20px;
+  margin-top: 5px;
 }
 </style>
