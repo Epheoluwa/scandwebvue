@@ -14,7 +14,7 @@
                   <div class="col-sm-10">
                     <input type="text" class="form-control" id="name" placeholder="Product Name" v-model="data.name">
                   </div>
-                  <span v-if="v$.name.$error" class="invalid-feedback" style="display:block"> {{ v$.name.$errors[0].$message }} </span>
+                  <span v-if="v$.value.name.$error" class="invalid-feedback" style="display:block"> {{ v$.value.name.$errors[0].$message }} </span>
             </div>
           </div>
           <div class="col-md-6">
@@ -23,7 +23,7 @@
                   <div class="col-sm-10">
                     <input type="text" class="form-control" :class="errrorClass" id="sku" placeholder="Product SKU" v-model="data.sku">
                   </div>
-                  <span v-if="v$.sku.$error" class="invalid-feedback" style="display:block"> {{ v$.sku.$errors[0].$message }} </span>
+                  <span v-if="v$.value.sku.$error" class="invalid-feedback" style="display:block"> {{ v$.value.sku.$errors[0].$message }} </span>
                   <span v-show="error" class="invalid-feedback" style="display:block">
                     SKU must be unique 
                   </span>
@@ -36,7 +36,7 @@
                   <div class="col-sm-10">
                     <input type="text" class="form-control" id="price" placeholder="Product Price" v-model="data.price">
                   </div>
-                  <span v-if="v$.price.$error" class="invalid-feedback" style="display:block"> {{ v$.price.$errors[0].$message }} </span>
+                  <span v-if="v$.value.price.$error" class="invalid-feedback" style="display:block"> {{ v$.value.price.$errors[0].$message }} </span>
             </div>
           </div>
           <div class="col-md-6">
@@ -49,7 +49,7 @@
                       <option value="furniture" id="Furniture">Furniture</option>
                     </select>
                   </div>
-                  <span v-if="v$.prod_type.$error" class="invalid-feedback" style="display:block"> {{ v$.prod_type.$errors[0].$message }} </span>
+                  <span v-if="v$.value.prod_type.$error" class="invalid-feedback" style="display:block"> {{ v$.value.prod_type.$errors[0].$message }} </span>
             </div>
           </div>
           <div class="col-md-6" v-show="sizetype">
@@ -58,7 +58,7 @@
                   <div class="col-sm-10">
                     <input type="text" class="form-control" id="size" placeholder="Product Size" v-model="data.size" >
                   </div>
-                  <span v-if="v$.size.$error" class="invalid-feedback" style="display:block"> {{ v$.size.$errors[0].$message }} </span>
+                  <span v-if="v$.value.size.$error" class="invalid-feedback" style="display:block"> {{ v$.value.size.$errors[0].$message }} </span>
             </div>
             <p>Please provide size in megabyte</p>
           </div>
@@ -68,7 +68,7 @@
                   <div class="col-sm-10">
                     <input type="text" class="form-control" id="weight" placeholder="Product Weight" v-model="data.weight">
                   </div>
-                  <span v-if="v$.weight.$error" class="invalid-feedback" style="display:block"> {{ v$.weight.$errors[0].$message }} </span>
+                  <span v-if="v$.value.weight.$error" class="invalid-feedback" style="display:block"> {{ v$.value.weight.$errors[0].$message }} </span>
             </div>
             <p>Please provide weight in kilogram</p>
           </div>
@@ -81,7 +81,7 @@
                         <div class="col-sm-10">
                           <input type="text" class="form-control" id="height" placeholder="Product Height" v-model="data.height" >
                         </div>
-                        <span v-if="v$.height.$error" class="invalid-feedback" style="display:block"> {{ v$.height.$errors[0].$message }} </span>
+                        <span v-if="v$.value.height.$error" class="invalid-feedback" style="display:block"> {{ v$.value.height.$errors[0].$message }} </span>
                   </div>
                 </div>
                 <div class="col-md-4" >
@@ -90,7 +90,7 @@
                         <div class="col-sm-10">
                           <input type="text" class="form-control" id="width" placeholder="Product Width" v-model="data.width">
                         </div>
-                        <span v-if="v$.width.$error" class="invalid-feedback" style="display:block"> {{ v$.width.$errors[0].$message }} </span>
+                        <span v-if="v$.value.width.$error" class="invalid-feedback" style="display:block"> {{ v$.value.width.$errors[0].$message }} </span>
                   </div>
                 </div>
                 <div class="col-md-4">
@@ -99,7 +99,7 @@
                         <div class="col-sm-10">
                           <input type="text" class="form-control" id="length" placeholder="Product Length" v-model="data.length">
                         </div>
-                        <span v-if="v$.length.$error" class="invalid-feedback" style="display:block"> {{ v$.length.$errors[0].$message }} </span>
+                        <span v-if="v$.value.length.$error" class="invalid-feedback" style="display:block"> {{ v$.value.length.$errors[0].$message }} </span>
                   </div>
                 </div>
             </div>
@@ -115,10 +115,10 @@
 
 <script>
 import MainNav from './mainNav.vue' 
-import { reactive, ref } from 'vue'
+import { reactive, ref, onUpdated, onMounted, onBeforeMount } from 'vue'
 import useValidate from '@vuelidate/core'
-import { required, alpha, numeric, helpers} from '@vuelidate/validators'
-
+// import { required, alpha, numeric, helpers} from '@vuelidate/validators'
+import useValidatefunction from '../composables/validation.js'
 // import axios from 'axios'; 
 // import { useRouter } from "vue-router";
 export default {
@@ -160,54 +160,50 @@ export default {
         furnituretype.value = true
       }
     }
+
+    const { rulesforDvd, rulesforBook, rulesforFurniture, rules} = useValidatefunction()
+    const v$ = reactive({
+      value: ""
+    })
+    onBeforeMount(()=> {
+      v$.value = useValidate(rules, data)
+      console.log("On Beforemounted v$ :" ,v$.value)
+      
+    })
+    onMounted(()=> {
+      
+      v$.value = useValidate(rules, data)
+      console.log("No Type yet")
+      console.log("On mounted v$ :" , v$)
+    })
+    onUpdated(()=> {
+      if(sizetype.value){
+       v$.value = useValidate(rulesforDvd, data)
+        console.log("DVD")
+        console.log("On dvd v$ :" , v$.value)
+      }
+      if(booktype.value){
+       v$.value = useValidate(rulesforBook, data)
+        console.log("BOOKS")
+        console.log("On books v$ :" ,v$.value)
+      
+      }
+      if(furnituretype.value){
+       v$.value = useValidate(rulesforFurniture, data)
+        console.log("FURNITURE")
+        console.log("On furni v$ :" ,v$.value)
+        
+      }
+      
+    })
     //error handling starts here
     const errrorClass = ref('')
     const error = ref(false)
-    const rules = {
-      name: { 
-        required : helpers.withMessage('Please, provide required data', required), 
-        alpha: helpers.withMessage('Product name must be an alphabet', alpha) 
-        },
-      sku: { 
-        required : helpers.withMessage('Please, provide required data', required) 
-        },
-      price: { 
-        required : helpers.withMessage('Please, provide required data', required),
-        numeric: helpers.withMessage('Product price must be a number', numeric)
-       },
-      prod_type: {
-        required : helpers.withMessage('Please, provide required data', required)
-        },
-      size: {
-        required : helpers.withMessage('Please, provide required data', required),
-        numeric: helpers.withMessage('Product size must be a number', numeric)
-        },
-      weight: {
-        required : helpers.withMessage('Please, provide required data', required),
-        numeric: helpers.withMessage('Product weight must be a number', numeric)
-        },
-      height: {
-        required : helpers.withMessage('Please, provide required data', required),
-        numeric: helpers.withMessage('Product height must be a number', numeric)
-        },
-      width: {
-        required : helpers.withMessage('Please, provide required data', required),
-        numeric: helpers.withMessage('Product width must be a number', numeric)
-        },
-      length: {
-        required : helpers.withMessage('Please, provide required data', required),
-        numeric: helpers.withMessage('Product length must be a number', numeric)
-        }
-    }
 
-    const v$ = useValidate(rules, data)
     //form submission function
     const submitform = async () => {
       // console.log(data)
-      console.log("on submit: ", v$)
-      // console.log("error finding: ", v$.name.$error)
-      // console.log("error finding ", v$.name.$errors[0].$message)
-
+      console.log("On submit v$ :" ,v$.value)
       const result = await v$.value.$validate();
       if(result){
         console.log("Data saved")
