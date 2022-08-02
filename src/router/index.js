@@ -6,6 +6,7 @@ import test from '../components/store.vue'
 
 
 
+
 const routes = [
     {
         path: '/',
