@@ -34,12 +34,13 @@
           </div>
           <div class="col-md-6">
             <div class="row mb-3">
-                  <label for="price" class="col-sm-2 col-form-label">Price (Amount in dollars[$])</label>
+                  <label for="price" class="col-sm-2 col-form-label">Price</label>
                   <div class="col-sm-10">
                     <input type="text" class="form-control" id="price" placeholder="Product Price" v-model="data.price">
                   </div>
                   <span v-if="v$.value.price.$error" class="invalid-feedback" style="display:block"> {{ v$.value.price.$errors[0].$message }} </span>
             </div>
+            <p>Amount in dollars[$]</p>
           </div>
           <div class="col-md-6">
             <div class="row mb-3">
@@ -128,6 +129,7 @@
    
   </div>
   </form>
+  <MainFooter></MainFooter>
 </template>
 
 <script>
@@ -137,9 +139,10 @@ import useValidate from '@vuelidate/core'
 import useValidatefunction from '../composables/validation.js'
 import axios from 'axios'; 
 import { useRouter } from "vue-router";
+import MainFooter from './mainFooter.vue';
 export default {
   name: 'HelloWorld',
-  components: { MainNav, },
+  components: { MainNav, MainFooter },
   setup(){
     const data = reactive({
       name: '',

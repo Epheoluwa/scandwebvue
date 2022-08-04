@@ -19,18 +19,18 @@
           </div>
         </div>
       </div>
-
     </div>
-    
+    <MainFooter></MainFooter>
   </div>
 </template>
 
 <script>
-import MainNav from './mainNav.vue'
+import MainNav from './mainNav.vue';
 import { onMounted, ref } from 'vue';
 import axios from 'axios';
+import MainFooter from './mainFooter.vue';
 export default {
-  components: { MainNav, },
+  components: { MainNav, MainFooter },
   
     setup() {
       const datavalue = ref([]);
@@ -51,4 +51,5 @@ export default {
 .checkboxstyle{
   margin-right: 80%;
 }
+
 </style>
