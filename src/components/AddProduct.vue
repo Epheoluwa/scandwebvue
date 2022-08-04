@@ -135,8 +135,8 @@ import MainNav from './mainNav.vue'
 import { reactive, ref, onMounted, onBeforeMount, nextTick } from 'vue'
 import useValidate from '@vuelidate/core'
 import useValidatefunction from '../composables/validation.js'
-// import axios from 'axios'; 
-// import { useRouter } from "vue-router";
+import axios from 'axios'; 
+import { useRouter } from "vue-router";
 export default {
   name: 'HelloWorld',
   components: { MainNav, },
@@ -153,7 +153,7 @@ export default {
       length: ''
     })
     //router variable defination
-    // const router = useRouter();
+    const router = useRouter();
 
     //conditions handling the different input show and hide
     const sizetype = ref(false);
@@ -161,28 +161,36 @@ export default {
     const furnituretype = ref(false);
     const defineShowtype = async()=>{
       if(data.prod_type === "size" ){
-        
         await nextTick()
          v$.value = useValidate(rulesforDvd, data)
         sizetype.value = true
         booktype.value = false
         furnituretype.value = false
+        data.height = ""
+        data.weight = ""
+        data.length = ""
+        data.width = ""
       }
       if(data.prod_type === "book" ){
-       
         await nextTick()
          v$.value = useValidate(rulesforBook, data)
-          sizetype.value = false
+        sizetype.value = false
         booktype.value = true
         furnituretype.value = false
+        data.height = ""
+        data.size = ""
+        data.length = ""
+        data.width = ""
       }
       if(data.prod_type === "furniture" ){
-        
         await nextTick()
          v$.value = useValidate(rulesforFurniture, data)
          sizetype.value = false
         booktype.value = false
         furnituretype.value = true
+        data.weight = ""
+        data.size = ""
+        
       }
     }
 
@@ -204,31 +212,26 @@ export default {
 
     //form submission function
     const submitform = async () => {
-      // console.log(data)
-      console.log("On submit v$ :" ,v$.value)
       const result = await v$.value.$validate();
       if(result){
         console.log("Data saved")
-      }else{
-        console.log("Data Not saved")
+          axios.post('http://localhost/phpcrudapi/api/create.php', 
+        {...data}, { headers: {
+          'Content-type': 'application/json',
+        }})
+        .then(function(response) {
+           console.log(response.data.status)
+          if (response.data.status == false ) {
+            errrorClass.value = 'is-invalid'
+            error.value = true
+          }else{
+            router.push({name: 'ViewProduct'})
+          }
+          })
+        .catch(function(e){
+          console.log("Error:",e)
+        })
       }
-
-      // axios.post('http://localhost/phpcrudapi/api/create.php', 
-      //   {...data}, { headers: {
-      //     'Content-type': 'application/json',
-      //   }})
-      //   .then(function(response) {
-      //     // console.log(response.data.status)
-      //     if (response.data.status == true ) {
-      //       router.push({name: 'ViewProduct'})
-      //     }else{
-      //       errrorClass.value = 'is-invalid'
-      //       error.value = true
-      //     }
-      //     })
-      //   .catch(function(e){
-      //     console.log("Error:",e)
-      //   })
     }
     return{
       data,
