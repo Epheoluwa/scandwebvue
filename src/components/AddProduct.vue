@@ -34,13 +34,13 @@
           </div>
           <div class="col-md-6">
             <div class="row mb-3">
-                  <label for="price" class="col-sm-2 col-form-label">Price</label>
+                  <label for="price" class="col-sm-2 col-form-label">Price($)</label>
                   <div class="col-sm-10">
                     <input type="text" class="form-control" id="price" placeholder="Product Price" v-model="data.price">
                   </div>
                   <span v-if="v$.value.price.$error" class="invalid-feedback" style="display:block"> {{ v$.value.price.$errors[0].$message }} </span>
             </div>
-            <p>Amount in dollars[$]</p>
+            
           </div>
           <div class="col-md-6">
             <div class="row mb-3">
@@ -64,29 +64,29 @@
                   <div v-if="sizetype">
                       <span v-if="v$.value.size.$error ? v$.value.size.$error : empty" class="invalid-feedback" style="display:block"> {{ v$.value.size.$errors[0].$message }} </span>
                   </div>
-                  
+                  <p>Please provide size in megabyte</p>
             </div>
-            <p>Please provide size in megabyte</p>
+            
           </div>
           <div class="col-md-6" v-show="booktype">
             <div class="row mb-3">
-                  <label for="weight" class="col-sm-2 col-form-label">Weight</label>
+                  <label for="weight" class="col-sm-2 col-form-label">Weight (KG)</label>
                   <div class="col-sm-10">
                     <input type="text" class="form-control" id="weight" placeholder="Product Weight" v-model="data.weight">
                   </div>
                   <div v-if="booktype">
                     <span v-if="v$.value.weight.$error ? v$.value.weight.$error : empty" class="invalid-feedback" style="display:block"> {{ v$.value.weight.$errors[0].$message }} </span>
                   </div>
-                  
+                  <p>Please provide weight in kilogram</p>
             </div>
-            <p>Please provide weight in kilogram</p>
+            
           </div>
           <div class="col-md-12" v-show="furnituretype">
             
             <div class="row">
                <div class="col-md-4" >
                   <div class="row mb-3">
-                        <label for="height" class="col-sm-2 col-form-label">Height</label>
+                        <label for="height" class="col-sm-2 col-form-label">Height (CM)</label>
                         <div class="col-sm-10">
                           <input type="text" class="form-control" id="height" placeholder="Product Height" v-model="data.height" >
                         </div>
@@ -98,7 +98,7 @@
                 </div>
                 <div class="col-md-4" >
                   <div class="row mb-3">
-                        <label for="width" class="col-sm-2 col-form-label">Width</label>
+                        <label for="width" class="col-sm-2 col-form-label">Width (CM)</label>
                         <div class="col-sm-10">
                           <input type="text" class="form-control" id="width" placeholder="Product Width" v-model="data.width">
                         </div>
@@ -110,7 +110,7 @@
                 </div>
                 <div class="col-md-4">
                   <div class="row mb-3">
-                        <label for="length" class="col-sm-2 col-form-label">Length</label>
+                        <label for="length" class="col-sm-2 col-form-label">Length (CM)</label>
                         <div class="col-sm-10">
                           <input type="text" class="form-control" id="length" placeholder="Product Length" v-model="data.length">
                         </div>
@@ -120,8 +120,9 @@
 
                   </div>
                 </div>
+                <p>Please provide dimension in HxWxL format</p>
             </div>
-               <p>Please provide dimension in HxWxL format</p>
+               
           </div>
         
       </div>
