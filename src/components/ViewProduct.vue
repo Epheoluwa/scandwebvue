@@ -4,17 +4,24 @@
     <button class="btn btn-outline-success ms-3">Mass Delete</button>
   </MainNav>
   <div class="container">
-    <div class="card" style="width: 18rem;">
-    
-        <div class="card-body">
-          <input type="checkbox" name="" id="" class="checkboxstyle"/>
-          <h5 class="card-title">Card title</h5>
-          <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          <a href="#" class="card-link">Card link</a>
-          <a href="#" class="card-link">Another link</a>
+    <div class="row" >
+      <div class="col-md-3 mb-3" v-for="prod in datavalue" :key="prod.id">
+        <div class="card" >
+          <div class="card-body">
+            <input type="checkbox" name="" id="" class="checkboxstyle"/>
+            <h5 class="card-title">{{prod.sku}}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">{{prod.name}}</h6>
+            <p class="card-text">{{prod.price}}$</p>
+            <p class="card-text" v-if="prod.size">Size:{{prod.size}}</p>
+            <p class="card-text" v-if="prod.weight">Weight:{{prod.weight}}</p>
+            <p class="card-text" v-if="prod.height">Dimension:{{prod.height}}x{{prod.width}}x{{prod.length}}</p>
+            
+          </div>
         </div>
       </div>
+
+    </div>
+    
   </div>
 </template>
 
@@ -32,7 +39,6 @@ export default {
         datavalue.value = response.data;
       }
       onMounted(fetchdata);
-      console.log(datavalue);
         return {
           datavalue
           };

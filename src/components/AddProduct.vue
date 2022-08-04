@@ -34,7 +34,7 @@
           </div>
           <div class="col-md-6">
             <div class="row mb-3">
-                  <label for="price" class="col-sm-2 col-form-label">Price</label>
+                  <label for="price" class="col-sm-2 col-form-label">Price (Amount in dollars[$])</label>
                   <div class="col-sm-10">
                     <input type="text" class="form-control" id="price" placeholder="Product Price" v-model="data.price">
                   </div>
