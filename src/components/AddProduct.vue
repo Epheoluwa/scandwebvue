@@ -138,7 +138,7 @@ import MainNav from './mainNav.vue'
 import { reactive, ref, onMounted, onBeforeMount, nextTick } from 'vue'
 import useValidate from '@vuelidate/core'
 import useValidatefunction from '../composables/validation.js'
-import axios from 'axios'; 
+// import axios from 'axios'; 
 import { useRouter } from "vue-router";
 import MainFooter from './mainFooter.vue';
 export default {
@@ -219,22 +219,39 @@ export default {
       const result = await v$.value.$validate();
       if(result){
         console.log("Data saved")
-          axios.post('http://localhost/phpcrudapi/api/create.php', 
-        {...data}, { headers: {
-          'Content-type': 'application/json',
-        }})
-        .then(function(response) {
-           console.log(response.data.status)
-          if (response.data.status == false ) {
-            errrorClass.value = 'is-invalid'
-            error.value = true
-          }else{
-            router.push({name: 'ViewProduct'})
-          }
-          })
-        .catch(function(e){
-          console.log("Error:",e)
-        })
+            // posting with fetch
+            fetch('https://epheoluwa.000webhostapp.com/api/create.php', {
+              method: 'post',
+              body: JSON.stringify({...data})
+            }).then(function(response) {
+              console.log(response)
+              // return response.json();
+              if (response.status == 401) {
+                errrorClass.value = 'is-invalid'
+                error.value = true
+              }else{
+                router.push({name: 'ViewProduct'})
+              }
+            });
+  
+        //Posting with axios this is 000webhost but working fine every other site both localhost and postman
+        //   axios.post('https://epheoluwa.000webhostapp.com/api/create.php', 
+        // {...data}, { headers: {
+        //   'Access-Control-Allow-Origin': '*',
+        //   'Content-type': 'application/json',
+        // }})
+        // .then(function(response) {
+        //    console.log(response.data.status)
+        //   if (response.data.status == false ) {
+        //     errrorClass.value = 'is-invalid'
+        //     error.value = true
+        //   }else{
+        //     router.push({name: 'ViewProduct'})
+        //   }
+        //   })
+        // .catch(function(e){
+        //   console.log("Error:",e)
+        // })
       }
     }
     return{

@@ -1,7 +1,10 @@
 <template>
-    <div class="footertop mt-4">
+<footer>
+ <div class="footertop mt-4">
       <h3 class="text-center mt-4">Scandiweb Test assignment</h3>
     </div>
+</footer>
+   
 </template>
 
 <script>
