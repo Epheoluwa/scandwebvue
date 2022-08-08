@@ -4,7 +4,7 @@
     <button class="btn btn-outline-success ms-3" @click="massDeletebtn" id="delete-product-btn">MASS DELETE</button>
   </MainNav>
   <div class="container">
-    <div class="row" v-if="datavalue">
+    <div class="row" v-if="datavalue.length > 0">
       <div class="col-md-3 mb-3" v-for="prod in datavalue" :key="prod.id">
         <div class="card" >
           <div class="card-body">
@@ -39,6 +39,7 @@ export default {
         let response = await axios.get('https://epheoluwa.000webhostapp.com/api/getproduct.php')
         datavalue.value = response.data;
       }
+      
       onMounted(fetchdata);
       const deleteThis = function(event){
         if(event.target.checked){
