@@ -16,5 +16,8 @@
 <style scoped>
 .footertop{
   border-top: 3px solid grey;
+  position: absolute;
+  bottom: 2%;
+  width: 100%;
 }
 </style>

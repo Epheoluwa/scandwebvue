@@ -15,23 +15,22 @@
             <p class="card-text" v-if="prod.size">Size: {{prod.size}} MB</p>
             <p class="card-text" v-if="prod.weight">Weight: {{prod.weight}}KG</p>
             <p class="card-text" v-if="prod.height">Dimension:{{prod.height}}x{{prod.width}}x{{prod.length}}</p>
-            
           </div>
         </div>
       </div>
     </div>
-    <MainFooter></MainFooter>
   </div>
+
 </template>
 
 <script>
 import MainNav from './mainNav.vue';
 import { onMounted, reactive, ref } from 'vue';
 import axios from 'axios';
-import MainFooter from './mainFooter.vue';
+// import MainFooter from './mainFooter.vue';
 import { useRouter } from 'vue-router';
 export default {
-  components: { MainNav, MainFooter },
+  components: { MainNav },
     setup() {
       const datavalue = ref([]);
       const prod_id = reactive([]);

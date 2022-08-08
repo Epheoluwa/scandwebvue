@@ -1,5 +1,4 @@
 <template>
-
 <form @submit.prevent="submitform" id="product_form">
   <div class="hello">
     <MainNav page="Add"> 
