@@ -1,7 +1,7 @@
 <template>
   <MainNav page="View"> 
-    <button class="btn btn-outline-success"><router-link :to="{ name: 'AddProduct'}" >Add</router-link></button>
-    <button class="btn btn-outline-success ms-3" @click="massDeletebtn" id="delete-product-btn">Mass Delete</button>
+    <button class="btn btn-outline-success"><router-link :to="{ name: 'AddProduct'}" >ADD</router-link></button>
+    <button class="btn btn-outline-success ms-3" @click="massDeletebtn" id="delete-product-btn">MASS DELETE</button>
   </MainNav>
   <div class="container">
     <div class="row" >
