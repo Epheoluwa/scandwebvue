@@ -4,7 +4,7 @@
     <button class="btn btn-outline-success ms-3" @click="massDeletebtn" id="delete-product-btn">MASS DELETE</button>
   </MainNav>
   <div class="container">
-    <div class="row" >
+    <div class="row" v-if="datavalue">
       <div class="col-md-3 mb-3" v-for="prod in datavalue" :key="prod.id">
         <div class="card" >
           <div class="card-body">
